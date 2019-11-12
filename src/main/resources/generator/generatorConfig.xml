@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 导入配置文件 -->
+    <properties resource="generator/db.properties"/>
+
+    <!-- defaultModelType="flat" 设置复合主键时不单独为主键创建实体 -->
+    <context id="MySql" defaultModelType="flat" targetRuntime="MyBatis3">
+
+        <!-- 生成的POJO实现java.io.Serializable接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <!--注释-->
+        <commentGenerator>
+            <!-- 注释里不添加日期 -->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 将数据库中表的字段描述信息添加到注释 -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!-- 数据库连接，直接通过${}读取application.properties里的配置 -->
+        <jdbcConnection
+                driverClass="${db.driverClassName}"
+                connectionURL="${db.url}"
+                userId="${db.username}"
+                password="${db.password}"/>
+
+        <!-- 生成POJO对象，并将类放到com.songguoliang.springboot.entity包下 -->
+        <javaModelGenerator targetPackage="com.ykm.miaosha.dataobject" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成mapper xml文件，并放到resources下的mapper文件夹下 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成mapper xml对应dao接口，放到com.songguoliang.springboot.mapper包下-->
+        <javaClientGenerator targetPackage="com.ykm.miaosha.mapper" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- table标签可以有多个，至少一个，tableName指定表名，可以使用_和%通配符 -->
+        <!--<table tableName="user_info" domainObjectName="UserDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>
+
+        <table tableName="user_password" domainObjectName="UserPasswordDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>-->
+
+        <!--<table tableName="item" domainObjectName="itemDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>
+        <table tableName="item_stock" domainObjectName="ItemStockDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>-->
+
+        <!--<table tableName="order_info" domainObjectName="OrderDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>-->
+
+        <!--<table tableName="sequence_info" domainObjectName="SequenceDO"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            &lt;!&ndash; 是否只生成POJO对象 &ndash;&gt;
+            <property name="modelOnly" value="false"/>
+            &lt;!&ndash; 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 &ndash;&gt;
+            &lt;!&ndash;<columnRenamingRule searchString="^u_" replaceString="" />&ndash;&gt;
+        </table>-->
+
+        <table tableName="promo" domainObjectName="Promo" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+            <!-- 是否只生成POJO对象 -->
+            <property name="modelOnly" value="false"/>
+            <!-- 数据库中表中列名有时我们都会带个前缀，而属性又不想带前缀，这个配置可以把属性的前缀去掉 -->
+            <!--<columnRenamingRule searchString="^u_" replaceString="" />-->
+        </table>
+
+
+    </context>
+</generatorConfiguration>
