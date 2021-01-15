@@ -6,12 +6,17 @@ import com.ykm.miaosha.error.BusinessException;
 import com.ykm.miaosha.response.CommonReturnType;
 import com.ykm.miaosha.service.ItemService;
 import com.ykm.miaosha.service.dto.ItemDTO;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
@@ -74,4 +79,27 @@ public class ItemController {
         }
         return itemVO;
     }
+
+    @KafkaListener(topics = "sun", groupId = "phoenix-web1")
+    public void listen(ConsumerRecord record) {
+        System.out.println("record.topic() = " + record.topic());
+        System.out.println("record.offset() = " + record.offset());
+        System.out.println("record.value() = " + record.value());
+    }
+
+    @Autowired
+    private KafkaTemplate<String,Object> kafkaTemplate;
+    @RequestMapping("message/send")
+    public String send(String msg){
+        try {
+            SendResult<String, Object> sun = kafkaTemplate.send("sun", msg).get();//使用kafka模板发送信息
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        System.out.println(kafkaTemplate.getDefaultTopic());
+        return "success";
+    }
+
 }
